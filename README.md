@@ -10,4 +10,4 @@ I first analyzed the distribution of the ages of the players by creating a histo
 I also investigated the relationship between minutes played and goals scored by a player using a scatterplot. The analysis showed that while goals scored fall within a typical range with few outliers, minutes played are more evenly distributed across players. Visually, this suggests a weak relationship between the two variables. The Pearson correlation coefficient, calculated at approximately 0.21, supports this observation, indicating a weak positive correlation between goals scored and minutes played. This suggests that although players who score more goals often spend more time on the field, playing additional minutes does not necessarily result in more goals.
 
 Clear directions on reproducing the results:
-
+The R script file and CSV must be saved in the same location. Ensure that the working directory is set when the R script and files are saved, such that the code may run.
