@@ -1,0 +1,58 @@
+---
+title: "Homework5"
+output: html_document
+date: "2025-10-22"
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+PlayerStats <- read.csv("Homework5New.csv")
+#read Homework4New.csv for a dataset to be referenced throughout this code
+library(ggplot2)
+#ggplot is necessary to create these graphs
+stats_ggplot <- ggplot(PlayerStats)
+#make the dataset into something that may be manipulated in ggplot
+```
+
+## RQ1: How old are professional women soccer players?
+
+```{r}
+stats_ggplot +
+  geom_histogram(aes(x = Age), binwidth = 2, fill = "#fec44f", color = "black") +
+  labs(title = "Distribution of Player Ages", x = "Age", y = "Frequency") 
+#use ggplot to create a histogram displaying the distribution of player ages
+
+round(sd(PlayerStats$Age), 2)
+round(median(PlayerStats$Age), 2)
+round(mean(PlayerStats$Age), 2)
+round(IQR(PlayerStats$Age), 2)
+round(min(PlayerStats$Age), 2)
+round(max(PlayerStats$Age), 2)
+round(quantile(PlayerStats$Age, probs = c(0.25, 0.5, 0.75)), 2)
+#calculate all relevant statistics to properly understand the graph, rounded to two decimal places: standard deviation, median, mean, IQR, minimum, maximum, specific quartiles
+```
+The distribution of player ages in the dataset is slightly right-skewed (positively skewed), with most values falling between 15 and 35 years. The mean age of players in the National Womens Soccer League across Australia, England, and Spain is approximately 27.53 years, while the median age is 27 years. Because the mean is slightly greater than the median, this supports the conclusion that the distribution is positively skewed. Since the median is closer to Q1, the upper half of the distribution is longer, and the IQR shows a larger spread exists above the median The standard deviation of 4.16 years suggests a moderate variation in ages around the average.
+
+## RQ2: How is minutes played related to the number of goals scored for NWSL players? 
+
+```{r}
+x <- PlayerStats$Player
+#make the set, x, that the code randomly pulls from players among the PlayerStats dataset
+set.seed(5)
+#use set.seed to ensure the same player is chosen randomly
+
+name <- sample(PlayerStats$Player,size=1)
+#make a variable containing the randomly chosen player, using "the sample function"sample()"
+
+stats_ggplot +
+  geom_point(aes(x = Min, y = Goals, color = Player==name)) + 
+  labs(title = "Comparison of Minutes Played and Goals Scored", x = "Minutes Played", y = "Goals Scored", color = name)
+#make a scatter plot compaing minutes played and goals scored with the color distinguished by the variable that was just created
+#set color in "aes()" to Player==name so color is distinguished whether the point is the set name
+#set color in "labs()" to name so that a legend is created shwoing the colors vay whether the point is truly the set name or not
+
+round(cor(PlayerStats$Min, PlayerStats$Goals), 2)
+#find the pearson correlation coefficient to better understand how relevant the analysis is, rounded to 2 decimal places
+```
+The analysis showed that while goals scored fall within a typical range with few outliers, minutes played are more evenly distributed across players. Visually, this suggests a weak relationship between the two variables. The Pearson correlation coefficient, calculated at approximately 0.21, supports this observation, indicating a weak positive correlation between goals scored and minutes played. This suggests that although players who score more goals often spend more time on the field, playing additional minutes does not necessarily result in more goals.
